@@ -192,11 +192,11 @@ Sys.setlocale(category="LC_TIME", locale="en_US.UTF-8")
 ```
 
 ```r
-# create a factor variable for weekend/weekda   y
+# create a factor variable for weekend/weekday
 data <- data %>% mutate(weekend=factor(weekdays(data$timestamp, abbreviate = TRUE) %in% c("Sat","Sun"), levels=c(FALSE, TRUE), labels=c("weekday", "weekend")))
 
 weekend_data <- data %>% group_by(weekend, time) %>%
-                      summarise(avg_steps=mean(steps, na.rm=TRUE)) %>%
+                      summarise(avg_steps=mean(imp_steps, na.rm=TRUE)) %>%
                       mutate(time=ymd("2015-09-20") + hm(time))
 ggplot(weekend_data, aes(time, avg_steps)) + 
     geom_line() + 
