@@ -135,8 +135,9 @@ avg_by_interval <- data %>% group_by(interval) %>% summarise(avg_steps=mean(step
 # create a list with the same length as data and substitute with either the average of 
 # the corresponding time period (if number of steps is NA) or with the given
 # number of steps if the value is not NA. 
-# The trick is that the avg_by_interval vector is reused if it is too short. Since
-# every day has exctly 288 5-minute intervals, this works as expected.
+# The trick is that the avg_by_interval vector is reused (i.e. concatenated to itself) 
+# if it is too short. Since every day in data has exactly 288 5-minute intervals
+# (and avg_by_interval has 288 elements), this works as expected.
 imp_steps <- ifelse(is.na(data$steps), avg_by_interval$avg_steps, data$steps)
 
 # show that there are no NAs anymore
@@ -172,8 +173,8 @@ mean_total_steps_v2 <- mean(daily_data_v2$steps_per_day, na.rm=TRUE)
 median_total_steps_v2 <- median(daily_data_v2$steps_per_day, na.rm=TRUE)
 ```
 
-The *mean* of the total steps per day is **1.0766189\times 10^{4}**.
-The *median* of the total steps per day is **1.0766189\times 10^{4}**.
+The *mean* of the total steps per day is **10766.19**.
+The *median* of the total steps per day is **10766.19**.
 
 Mean and median values are now identical. Mean value is higher than before, because
 NAs got substiuted with the average of the corresponding interval over all days.
